@@ -40,11 +40,34 @@ export default function TextForm(props) {
         props.showAlert("Removed Extra Spaces", "success");
     }
 
+    // const handleSortNumbers = () => {
+    //     let newText = text.split(/\s+/).filter((element)=>{return element.length!==0}).sort((a,b)=>{return a-b});
+    //     setText(newText.join(" "))
+    //     props.showAlert("Sorted Numbers", "success");
+    // }
     const handleSortNumbers = () => {
-        let newText = text.split(/\s+/).filter((element)=>{return element.length!==0}).sort((a,b)=>{return a-b});
-        setText(newText.join(" "))
+        // Split into parts and remove empty
+        let parts = text.split(/\s+/).filter((element) => element.length !== 0);
+    
+        // Check if all are valid numbers
+        let isValid = parts.every((element) => /^-?\d+(\.\d+)?$/.test(element));
+        
+    
+        if (!isValid) {
+            props.showAlert("Error: Text contains alphabets or symbols!", "danger");
+            return;
+        }
+    
+        // Convert strings to numbers, sort, and join back
+        let newText = parts
+            .map(Number)
+            .sort((a, b) => a - b)
+            .join(" ");
+    
+        setText(newText);
         props.showAlert("Sorted Numbers", "success");
-    }
+    };
+    
 
     const [text, setText] = useState(''); 
   
