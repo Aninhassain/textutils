@@ -40,6 +40,12 @@ export default function TextForm(props) {
         props.showAlert("Removed Extra Spaces", "success");
     }
 
+    const handleSortNumbers = () => {
+        let newText = text.split(/\s+/).filter((element)=>{return element.length!==0}).sort((a,b)=>{return a-b});
+        setText(newText.join(" "))
+        props.showAlert("Sorted Numbers", "success");
+    }
+
     const [text, setText] = useState(''); 
   
     return (
@@ -55,6 +61,7 @@ export default function TextForm(props) {
             <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={handleClearClick}>Clear Text</button>
             <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={handleCopy}>Copy Text</button>
             <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+            <button className="btn btn-primary mx-1 my-1" disabled={text.length===0} onClick={handleSortNumbers}>Sort numbers</button>
        
         </div>
         <div className="container my-3" style={{color: props.mode==='dark'?'white':'#042743'}}>
